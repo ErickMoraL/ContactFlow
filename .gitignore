@@ -53,7 +53,7 @@ staticfiles/
 
 # Env files
 .env
-.env.*
+
 *.env
 
 # Virtual environments
@@ -84,3 +84,5 @@ poetry.lock
 # IDE / tooling
 *.iml
 .codex
+
+Notas
