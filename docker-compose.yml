@@ -20,6 +20,7 @@ services:
 
   web:
     build: .
+    #user: "${UID}:${GID}"
     container_name: contactflow_web
     restart: unless-stopped
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000" # Run migrations before starting the server
@@ -35,6 +36,7 @@ services:
 
   node:
     image: node:22-alpine
+    #user: "${UID}:${GID}"
     container_name: contactflow_tailwind
     working_dir: /app
     command: sh -c "npm install && npm run dev:css"

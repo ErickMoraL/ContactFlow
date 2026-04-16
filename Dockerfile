@@ -6,6 +6,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
+    git \
     default-libmysqlclient-dev \
     build-essential \
     pkg-config \

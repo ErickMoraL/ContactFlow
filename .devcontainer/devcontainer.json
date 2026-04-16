@@ -1,0 +1,26 @@
+{
+  "name": "ContactFlow",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "web",
+  "runServices": ["web", "db"],
+  "workspaceFolder": "/app",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [8000],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "batisteo.vscode-django",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "charliermarsh.ruff"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.analysis.extraPaths": ["/app"]
+      }
+    }
+  }
+}
