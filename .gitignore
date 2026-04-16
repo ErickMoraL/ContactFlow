@@ -85,4 +85,7 @@ poetry.lock
 *.iml
 .codex
 
+#node
+/node_modules
+
 Notas

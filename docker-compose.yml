@@ -22,7 +22,7 @@ services:
     build: .
     container_name: contactflow_web
     restart: unless-stopped
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000" # Run migrations before starting the server
     volumes:
       - .:/app
     ports:
