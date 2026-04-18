@@ -15,7 +15,10 @@
         "batisteo.vscode-django",
         "bradlc.vscode-tailwindcss",
         "esbenp.prettier-vscode",
-        "charliermarsh.ruff"
+        "charliermarsh.ruff",
+        "mhutchie.git-graph",
+        "ritwickdey.LiveServer",
+        "zignd.html-css-class-completion"
       ],
       "settings": {
         "python.defaultInterpreterPath": "/usr/local/bin/python",
