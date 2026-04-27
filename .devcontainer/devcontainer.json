@@ -4,6 +4,7 @@
   "service": "web",
   "runServices": ["web", "db"],
   "workspaceFolder": "/app",
+  "remoteUser": "1000",
   "shutdownAction": "stopCompose",
   "forwardPorts": [8000],
   "customizations": {
