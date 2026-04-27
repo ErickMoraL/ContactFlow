@@ -26,6 +26,9 @@ services:
         UID: "${UID:-1000}"
         GID: "${GID:-1000}"
     container_name: contactflow_web
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     restart: unless-stopped
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000" # Run migrations before starting the server
     volumes:
