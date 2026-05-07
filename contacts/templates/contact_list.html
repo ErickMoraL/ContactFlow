@@ -1,0 +1,33 @@
+{% extends "layout.html" %} 
+{% block title %}Contacts{% endblock %} 
+{% block content %}
+<h1>Contacts</h1>
+
+<table
+  class="mx-auto w-full max-w-4xl border-collapse overflow-hidden rounded-lg border border-(--app-border)">
+  <thead class="bg-primary text-left text-white">
+    <tr>
+      <th class="p-3 font-medium">First Name</th>
+      <th class="p-3 font-medium">Last Name</th>
+      <th class="p-3 font-medium">Status</th>
+    </tr>
+  </thead>
+
+  <tbody class="divide-y divide-(--app-border)">
+    {% for contact in contacts %}
+    <tr class="hover:bg-primary-soft transition">
+      <td class="p-3">{{ contact.first_name }}</td>
+      <td class="p-3">{{ contact.last_name }}</td>
+      <td class="p-3">
+        <span
+          class="bg-secondary-soft text-secondary rounded px-2 py-1 text-sm"
+        >
+          {{ contact.status }}
+        </span>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
