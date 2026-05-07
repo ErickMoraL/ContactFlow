@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Mini CRM con Django",
   "scripts": {
-    "dev:css": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/css/styles.css --watch"
+    "dev:css": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/css/output.css --watch=always"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.2.2",

@@ -87,5 +87,6 @@ poetry.lock
 
 #node
 /node_modules
+static/css/output.css
 
 Notas
