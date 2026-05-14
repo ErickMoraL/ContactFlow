@@ -2,8 +2,8 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@source "../../templates";
-@source "../../contacts/templates";
+@source "../../contacts/templates/**/*.html";
+@source "../../templates/**/*.html";
 
 @theme {
   /* Custom theme colors */
@@ -58,20 +58,49 @@
 }
 @layer components {
   .btn-primary {
-    @apply bg-primary rounded px-4 py-2 text-white;
-    &:hover {
-      @apply bg-primary-hover;
-    }
+    @apply bg-primary hover:bg-primary-hover rounded px-4 py-2 text-white;
   }
 
   .btn-secondary {
-    @apply bg-secondary rounded px-4 py-2 text-white;
-    &:hover {
-      @apply bg-secondary-soft;
-    }
+    @apply bg-secondary hover:bg-secondary-soft rounded px-4 py-2 text-white;
   }
 
   .btn-accent {
     @apply bg-accent rounded px-4 py-2 text-white;
+  }
+  .input-primary {
+    background-color: var(--app-surface);
+    border-color: var(--app-border);
+
+    @apply w-full rounded border px-3 py-2 focus:ring-2 focus:outline-none;
+    @apply focus:ring-primary;
+  }
+
+  .select-primary {
+    background-color: var(--app-surface);
+    border-color: var(--app-border);
+    color: var(--app-text);
+
+    @apply w-full appearance-none rounded border px-3 py-2 pr-10 transition;
+    @apply focus:ring-primary focus:border-primary focus:ring-2 focus:outline-none;
+    @apply disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .input-error {
+    @apply border-red-500;
+  }
+
+  .card {
+    background-color: var(--app-surface);
+    border-color: var(--app-border);
+
+    @apply flex flex-col gap-4 rounded border p-4 shadow;
+  }
+  .label-primary {
+    @apply mb-1 block font-medium;
+  }
+
+  .error-text {
+    @apply mt-1 text-sm text-red-500;
   }
 }

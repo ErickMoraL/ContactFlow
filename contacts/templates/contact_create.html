@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block title %}Create Contact{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-xl">
+  <div class="mb-6 text-center">
+    <p class="muted text-sm font-medium uppercase tracking-wide">Contacts</p>
+    <h1 class="text-accent mt-1 text-3xl font-bold">Create contact</h1>
+  </div>
+
+  <form method="post" class="card space-y-5">
+    {% csrf_token %}
+
+    <div>
+      <label for="id_first_name" class="label-primary">First name</label>
+      <input
+        type="text"
+        name="first_name"
+        id="id_first_name"
+        value="{{ form.first_name.value|default:'' }}"
+        class="input-primary"
+      />
+
+      {% if form.first_name.errors %}
+        <p class="error-text">{{ form.first_name.errors }}</p>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_last_name" class="label-primary">Last name</label>
+      <input
+        type="text"
+        name="last_name"
+        id="id_last_name"
+        value="{{ form.last_name.value|default:'' }}"
+        class="input-primary"
+      />
+
+      {% if form.last_name.errors %}
+        <p class="error-text">{{ form.last_name.errors }}</p>
+      {% endif %}
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div>
+        <label for="id_status" class="label-primary">Status</label>
+        <div class="relative">
+          <select name="status" id="id_status" class="select-primary">
+            {% for value, label in form.status.field.choices %}
+              <option
+                value="{{ value }}"
+                {% if form.status.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}
+              >
+                {{ label }}
+              </option>
+            {% endfor %}
+          </select>
+          <span
+            class="pointer-events-none absolute right-3 top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 border-b border-r border-secondary"
+          ></span>
+        </div>
+
+        {% if form.status.errors %}
+          <p class="error-text">{{ form.status.errors }}</p>
+        {% endif %}
+      </div>
+
+      <div>
+        <label for="id_company" class="label-primary">Company</label>
+        <div class="relative">
+          <select name="company" id="id_company" class="select-primary">
+            {% for value, label in form.company.field.choices %}
+              <option
+                value="{{ value }}"
+                {% if form.company.value|stringformat:"s" == value|stringformat:"s" %}selected{% endif %}
+              >
+                {{ label }}
+              </option>
+            {% endfor %}
+          </select>
+          <span
+            class="pointer-events-none absolute right-3 top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 border-b border-r border-secondary"
+          ></span>
+        </div>
+
+        {% if form.company.errors %}
+          <p class="error-text">{{ form.company.errors }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+      <a href="{% url 'contact_list' %}" class="btn-secondary text-center">Cancel</a>
+      <button type="submit" class="btn-primary">Save</button>
+    </div>
+  </form>
+</section>
+{% endblock %}
