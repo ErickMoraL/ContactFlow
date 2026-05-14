@@ -2,7 +2,7 @@
   "name": "ContactFlow",
   "dockerComposeFile": "../docker-compose.yml",
   "service": "web",
-  "runServices": ["web", "db","node"],
+  "runServices": ["web", "db", "node"],
   "workspaceFolder": "/app",
   "remoteUser": "1000",
   "shutdownAction": "stopCompose",
@@ -19,11 +19,20 @@
         "charliermarsh.ruff",
         "mhutchie.git-graph",
         "ritwickdey.LiveServer",
-        "zignd.html-css-class-completion"
+        "zignd.html-css-class-completion",
+        "monosans.djlint"
       ],
       "settings": {
         "python.defaultInterpreterPath": "/usr/local/bin/python",
-        "python.analysis.extraPaths": ["/app"]
+        "python.analysis.extraPaths": ["/app"],
+
+        "[django-html]": {
+          "editor.defaultFormatter": "monosans.djlint",
+          "editor.formatOnSave": true
+        },
+        "[html]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
       }
     }
   }
