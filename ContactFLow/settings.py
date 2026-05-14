@@ -56,7 +56,7 @@ ROOT_URLCONF = "ContactFLow.urls"
 TEMPLATES = [  # type: ignore[list-item] # type: ignore[assignment]
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -124,3 +124,6 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+LOGIN_REDIRECT_URL = "contact_list"
+LOGOUT_REDIRECT_URL = "login"
