@@ -37,23 +37,26 @@ class ContactAdmin(admin.ModelAdmin):
         "last_name",
         "company",
         "status",
-        "primary_email",
-        "primary_phone",
+        "admin_primary_email",
+        "admin_primary_phone",
         "created_at",
     )
 
     @admin.display(description="Email")
-    def primary_email(self, obj):
-        first_email = obj.emails.first()
-        return first_email.email if first_email else "-"
+    def admin_primary_email(self, obj):
+        return obj.primary_email
 
     @admin.display(description="Phone")
-    def primary_phone(self, obj):
-        first_phone = obj.phones.first()
-        return first_phone.phone_number if first_phone else "-"
+    def admin_primary_phone(self, obj):
+        return obj.primary_phone
 
     def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related("emails", "phones")
+        return (
+            super()
+            .get_queryset(request)
+            .select_related("company")
+            .prefetch_related("emails", "phones")
+        )
 
     search_fields = (
         "first_name",

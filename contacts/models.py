@@ -45,6 +45,16 @@ class Contact(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def primary_email(self):
+        first_email = self.emails.order_by("-created_at").first()
+        return first_email.email if first_email else "-"
+
+    @property
+    def primary_phone(self):
+        first_phone = self.phones.order_by("-created_at").first()
+        return first_phone.phone_number if first_phone else "-"
+
     def __str__(self):
         full_name = f"{self.first_name} {self.last_name}".strip()
         return full_name or "Unnamed Contact"
