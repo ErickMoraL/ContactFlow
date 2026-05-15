@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "contacts",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,7 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = "contact_list"
 LOGOUT_REDIRECT_URL = "login"
+
+# Email settings
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "ContactFlow <no-reply@contactflow.local>"

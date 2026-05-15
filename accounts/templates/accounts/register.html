@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}
+  Register
+{% endblock title %}
+{% block content %}
+  <section class="mx-auto mt-16 max-w-md">
+    <div class="card">
+      <h1 class="text-accent mb-6 text-center text-2xl font-bold">Register</h1>
+      <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {% if form.non_field_errors %}<div class="error-text">{{ form.non_field_errors }}</div>{% endif %}
+        <div>
+          <label for="{{ form.username.id_for_label }}" class="label-primary">Username</label>
+          <input type="text"
+                 name="{{ form.username.html_name }}"
+                 id="{{ form.username.id_for_label }}"
+                 autofocus
+                 class="input-primary {% if form.username.errors %}input-error{% endif %}" />
+          {% if form.username.errors %}<p class="error-text">{{ form.username.errors.0 }}</p>{% endif %}
+          {% if form.username.help_text %}<div class="muted mt-2 text-sm">{{ form.username.help_text|safe }}</div>{% endif %}
+        </div>
+        <div>
+          <label for="{{ form.password1.id_for_label }}" class="label-primary">Password</label>
+          <input type="password"
+                 name="{{ form.password1.html_name }}"
+                 autocomplete="new-password"
+                 required
+                 id="{{ form.password1.id_for_label }} "
+                 class="input-primary {% if form.password1.errors %}input-error{% endif %}">
+          {% if form.password1.errors %}<p class="error-text">{{ form.password1.errors.0 }}</p>{% endif %}
+          {% if form.password1.help_text %}<div class="muted mt-2 text-sm">{{ form.password1.help_text|safe }}</div>{% endif %}
+        </div>
+        <div>
+          <label for="{{ form.password2.id_for_label }}" class="label-primary">Confirm password</label>
+          <input type="password"
+                 name="{{ form.password2.html_name }}"
+                 autocomplete="new-password"
+                 required
+                 id="{{ form.password2.id_for_label }}"
+                 class="input-primary {% if form.password2.errors %}input-error{% endif %}">
+          {% if form.password2.errors %}<p class="error-text">{{ form.password2.errors.0 }}</p>{% endif %}
+          {% if form.password2.help_text %}<div class="muted mt-2 text-sm">{{ form.password2.help_text|safe }}</div>{% endif %}
+        </div>
+     
+        <button type="submit" class="btn-primary w-full">Create account</button>
+      </form>
+    </div>
+  </section>
+{% endblock content %}
