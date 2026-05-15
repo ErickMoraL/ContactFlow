@@ -8,18 +8,19 @@ from django.contrib.auth.views import (
     PasswordResetView,
 )
 from django.urls import reverse_lazy
+from .forms import RegisterForm
 
 
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = RegisterForm(request.POST)
 
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect("contact_list")
     else:
-        form = UserCreationForm()
+        form = RegisterForm()
 
     return render(request, "accounts/register.html", {"form": form})
 

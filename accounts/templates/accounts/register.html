@@ -10,6 +10,31 @@
         {% csrf_token %}
         {% if form.non_field_errors %}<div class="error-text">{{ form.non_field_errors }}</div>{% endif %}
         <div>
+          <label for="{{ form.first_name.id_for_label }}" class="label-primary">First name</label>
+          <input type="text"
+                 name="{{ form.first_name.html_name }}"
+                 id="{{ form.first_name.id_for_label }}"
+                 class="input-primary {% if form.first_name.errors %}input-error{% endif %}" />
+          {% if form.first_name.errors %}<p class="error-text">{{ form.first_name.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+          <label for="{{ form.last_name.id_for_label }}" class="label-primary">Last name</label>
+          <input type="text"
+                 name="{{ form.last_name.html_name }}"
+                 id="{{ form.last_name.id_for_label }}"
+                 class="input-primary {% if form.last_name.errors %}input-error{% endif %}" />
+          {% if form.last_name.errors %}<p class="error-text">{{ form.last_name.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+          <label for="{{ form.email.id_for_label }}" class="label-primary">Email</label>
+          <input type="email"
+                 name="{{ form.email.html_name }}"
+                 id="{{ form.email.id_for_label }}"
+                 class="input-primary {% if form.email.errors %}input-error{% endif %}" />
+          {% if form.email.errors %}<p class="error-text">{{ form.email.errors.0 }}</p>{% endif %}
+          {% if form.email.help_text %}<div class="muted mt-2 text-sm">{{ form.email.help_text|safe }}</div>{% endif %}
+        </div>
+        <div>
           <label for="{{ form.username.id_for_label }}" class="label-primary">Username</label>
           <input type="text"
                  name="{{ form.username.html_name }}"
@@ -41,7 +66,6 @@
           {% if form.password2.errors %}<p class="error-text">{{ form.password2.errors.0 }}</p>{% endif %}
           {% if form.password2.help_text %}<div class="muted mt-2 text-sm">{{ form.password2.help_text|safe }}</div>{% endif %}
         </div>
-     
         <button type="submit" class="btn-primary w-full">Create account</button>
       </form>
     </div>
