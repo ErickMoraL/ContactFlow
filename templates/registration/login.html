@@ -1,4 +1,4 @@
-{% extends "auth_layout.html" %}
+{% extends "base.html" %}
 {% block title %}
     Login
 {% endblock title %}
@@ -14,20 +14,22 @@
                            name="username"
                            id="id_username"
                            value="{{ form.username.value|default:'' }}"
-                           class="input-primary">
-                    {% if form.username.errors %}<p class="error-text">{{ form.username.errors }}</p>{% endif %}
+                           class="input-primary {% if form.username.errors %}input-error{% endif %}">
+                    {% if form.username.errors %}<div class="error-text">{{ form.username.errors }}</div>{% endif %}
                 </div>
                 <div>
                     <label for="id_password" class="label-primary">Password</label>
                     <input type="password"
                            name="password"
                            id="id_password"
-                           class="input-primary">
-                    {% if form.password.errors %}<p class="error-text">{{ form.password.errors }}</p>{% endif %}
+                           class="input-primary {% if form.password.errors %}input-error{% endif %}">
+                    {% if form.password.errors %}<div class="error-text">{{ form.password.errors }}</div>{% endif %}
                 </div>
                 {% if form.non_field_errors %}<div class="error-text">{{ form.non_field_errors }}</div>{% endif %}
                 <button type="submit" class="btn-primary w-full">Login</button>
             </form>
+            <a href="{% url 'password_reset' %}"
+               class="text-sm text-primary hover:underline flex flex-row-reverse">Forgot password?</a>
         </div>
     </div>
 {% endblock content %}
