@@ -30,6 +30,9 @@
           "editor.defaultFormatter": "monosans.djlint",
           "editor.formatOnSave": true
         },
+        "djlint.configuration": "/app/pyproject.toml",
+        "djlint.useEditorIndentation": false,
+
         "[html]": {
           "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
