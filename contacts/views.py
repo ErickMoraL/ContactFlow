@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 
 from django.http import HttpResponse
 from .models import Contact
@@ -12,7 +12,9 @@ def contact_list(request):
 
     query = request.GET.get("q", "")
 
-    contacts = Contact.objects.prefetch_related("emails", "phones").all()
+    contacts = Contact.objects.prefetch_related("emails", "phones").filter(
+        user=request.user
+    )
 
     if query:
         contacts = contacts.filter(
@@ -22,14 +24,14 @@ def contact_list(request):
             | Q(status__icontains=query)
         )
 
-    return render(request, "contact_list.html", {"contacts": contacts})
+    return render(request, "contacts/contact_list.html", {"contacts": contacts})
 
 
 @login_required
 def contact_detail(request, pk):
-    contact = Contact.objects.get(pk=pk)
+    contact = get_object_or_404(Contact, pk=pk, user=request.user)
 
-    return render(request, "contact_detail.html", {"contact": contact})
+    return render(request, "contacts/contact_detail.html", {"contact": contact})
 
 
 @login_required
@@ -38,12 +40,15 @@ def contact_create(request):
         form = ContactForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            contact = form.save(commit=False)
+            contact.user = request.user
+            contact.save()
             return redirect("contact_list")
     else:
         form = ContactForm()
 
-    return render(request, "contact_create.html", {"form": form})
+    return render(request, "contacts/contact_create.html", {"form": form})
+
 
 @login_required
 def contact_edit(request, pk):
@@ -51,9 +56,11 @@ def contact_edit(request, pk):
 
     return render(request, "contact_edit.html", {"contact": contact})
 
+
 @login_required
 def contact_delete(request):
     return HttpResponse("Delete selected contacts")
+
 
 @login_required
 def contact_mark_closed(request):
