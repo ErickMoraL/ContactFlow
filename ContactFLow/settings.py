@@ -132,3 +132,8 @@ LOGOUT_REDIRECT_URL = "login"
 # Email settings
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = "ContactFlow <no-reply@contactflow.local>"
+
+# Custom authentication backend
+AUTHENTICATION_BACKENDS = [
+    "accounts.backends.EmailOrUsernameBackend",
+]
