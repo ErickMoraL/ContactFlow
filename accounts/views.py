@@ -1,5 +1,4 @@
 from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import (
     LoginView,
@@ -10,8 +9,11 @@ from django.contrib.auth.views import (
     PasswordResetDoneView,
     PasswordResetView,
 )
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from .forms import RegisterForm
+from .forms import UserProfileForm
+from django.contrib.auth.models import User
 
 
 def register(request):
@@ -58,3 +60,17 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = "accounts/password_reset_complete.html"
+
+
+@login_required
+def profile(request):
+    if request.method == "POST":
+        form = UserProfileForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+    else:
+        form = UserProfileForm(instance=request.user)
+
+    return render(request, "accounts/profile.html", {"form": form})

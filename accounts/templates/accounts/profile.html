@@ -1,0 +1,72 @@
+{% extends "app_layout.html" %}
+{% block title %}
+  Profile
+{% endblock title %}
+{% block content %}
+  <section class="mx-auto max-w-xl">
+    <div class="mb-6 text-center">
+      <p class="muted text-sm font-medium uppercase tracking-wide">Account</p>
+      <h1 class="text-accent mt-1 text-3xl font-bold">Profile</h1>
+      <p class="muted mt-2 text-sm">View and update your profile information.</p>
+    </div>
+    <form class="card space-y-6" method="post">
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div class="error-text">{{ form.non_field_errors }}</div>{% endif %}
+      <div class="grid grid-cols-[140px_1fr] items-center gap-4">
+        <label for="{{ form.first_name.id_for_label }}" class="label-primary">First name</label>
+        <div>
+          <input type="text"
+                 name="{{ form.first_name.html_name }}"
+                 id="{{ form.first_name.id_for_label }}"
+                 autocomplete="given-name"
+                 class="input-primary w-full {% if form.first_name.errors %}input-error{% endif %}"
+                 value="{{ form.first_name.value|default:'' }}">
+          {% if form.first_name.errors %}<div class="error-text mt-1">{{ form.first_name.errors }}</div>{% endif %}
+        </div>
+      </div>
+      <div class="grid grid-cols-[140px_1fr] items-center gap-4">
+        <label for="{{ form.last_name.id_for_label }}" class="label-primary">Last name</label>
+        <div>
+          <input type="text"
+                 name="{{ form.last_name.html_name }}"
+                 id="{{ form.last_name.id_for_label }}"
+                 autocomplete="family-name"
+                 class="input-primary w-full {% if form.last_name.errors %}input-error{% endif %}"
+                 value="{{ form.last_name.value|default:'' }}">
+          {% if form.last_name.errors %}<div class="error-text mt-1">{{ form.last_name.errors }}</div>{% endif %}
+        </div>
+      </div>
+      <div class="grid grid-cols-[140px_1fr] items-center gap-4">
+        <label for="{{ form.username.id_for_label }}" class="label-primary">Username</label>
+        <div>
+          <input type="text"
+                 name="{{ form.username.html_name }}"
+                 id="{{ form.username.id_for_label }}"
+                 autocomplete="username"
+                 autofocus
+                 class="input-primary w-full {% if form.username.errors %}input-error{% endif %}"
+                 value="{{ form.username.value|default:'' }}">
+          {% if form.username.errors %}<div class="error-text mt-1">{{ form.username.errors }}</div>{% endif %}
+        </div>
+      </div>
+      <div class="grid grid-cols-[140px_1fr] items-center gap-4">
+        <label for="{{ form.email.id_for_label }}" class="label-primary">Email address</label>
+        <div>
+          <input type="email"
+                 name="{{ form.email.html_name }}"
+                 id="{{ form.email.id_for_label }}"
+                 autocomplete="email"
+                 class="input-primary w-full {% if form.email.errors %}input-error{% endif %}"
+                 value="{{ form.email.value|default:'' }}">
+          {% if form.email.errors %}<div class="error-text mt-1">{{ form.email.errors }}</div>{% endif %}
+        </div>
+      </div>
+      <div class="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+        <a href="{% url 'contact_list' %}" class="btn-secondary text-center">Cancel</a>
+        <button type="submit"
+                class="btn-primary"
+                onclick="return confirm('Are you sure you want to update your profile?')">Update Profile</button>
+      </div>
+    </form>
+  </section>
+{% endblock content %}

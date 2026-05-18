@@ -27,3 +27,9 @@ class RegisterForm(UserCreationForm):
             raise ValidationError("Email already exists.")
 
         return email
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "first_name", "last_name", "email")

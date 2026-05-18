@@ -30,6 +30,10 @@
                class="hover:bg-primary-soft hover:text-primary block px-4 py-2 text-sm text-(--app-text) transition">
               Change password
             </a>
+            <a href="{% url 'profile' %}"
+               class="hover:bg-primary-soft hover:text-primary block px-4 py-2 text-sm text-(--app-text) transition">
+              Profile
+            </a>
             <form action="{% url 'logout' %}" method="post">
               {% csrf_token %}
               <button type="submit"
