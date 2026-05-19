@@ -3,21 +3,25 @@
   Contacts
 {% endblock title %}
 {% block content %}
-  <form method="get" class="mx-auto mb-4 flex gap-4">
-    <input type="text"
-           name="q"
-           value="{{ request.GET.q }}"
-           placeholder="Search contacts"
-           class="w-full rounded border border-(--app-border) px-4 py-2" />
-    <button type="submit" class="btn-primary">Search</button>
-  </form>
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-[4fr_1fr] mb-6">
+    <form method="get" class="flex gap-4">
+      <input type="text"
+             name="q"
+             value="{{ request.GET.q }}"
+             placeholder="Search contacts"
+             class="input-primary w-full">
+      <button type="submit" class="btn-primary">Search</button>
+    </form>
+    <a href="{% url 'contact_create' %}"
+       class="btn-primary whitespace-nowrap">Create new contact</a>
+  </div>
   <form method="post">
     {% csrf_token %}
     <section class="grid grid-cols-1 gap-4 lg:grid-cols-[4fr_1fr]">
       <div>
         <h1 class="text-accent text-center text-2xl font-bold">Contacts</h1>
         <div class="overflow-x-auto">
-          <table class="mx-auto w-full max-w-4xl border-collapse overflow-hidden rounded-lg border border-(--app-border)">
+          <table class="mx-0 w-full  border-collapse overflow-hidden rounded-lg border border-(--app-border)">
             <thead class="bg-primary text-left text-white">
               <tr>
                 <th class="p-3">
@@ -66,10 +70,6 @@
       <aside class="sticky top-4 rounded-lg border border-(--app-border) p-4">
         <h2 class="text-secondary mb-4 text-center text-lg font-medium">Actions</h2>
         <ul class="space-y-3">
-          <li>
-            <a href="{% url 'contact_create' %}"
-               class="btn-primary block w-full text-center">Create new contact</a>
-          </li>
           <li>
             <button class="btn-primary w-full"
                     type="submit"
