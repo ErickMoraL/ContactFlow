@@ -21,6 +21,23 @@ ContactFlow es un mini CRM hecho con Django. Permite gestionar contactos, empres
 - Mantener el proyecto simple y entendible para un desarrollador junior/intermedio.
 - Evitar sobreingenieria.
 
+## Nivel del Proyecto
+
+Este proyecto es de aprendizaje. El código debe ser entendible para un desarrollador junior/intermedio. Una solución técnicamente más avanzada no es mejor si reduce la comprensión del usuario.
+
+## Regla de Optimización
+
+Cuando el usuario pida "optimizar", "mejorar" o "limpiar" código:
+
+- No hacer refactors grandes por defecto.
+- No cambiar la estructura general del archivo salvo que sea necesario.
+- Mantener nombres, flujo y organización actual siempre que sea posible.
+- Primero explicar qué problema se detectó.
+- Luego proponer el cambio mínimo.
+- Si existe una mejora grande, sugerirla como opción separada antes de implementarla.
+- Priorizar que el usuario entienda el código sobre hacerlo "más elegante".
+- No convertir funciones simples en clases, servicios, helpers o abstracciones nuevas sin pedir permiso.
+
 ## Estructura Relevante
 
 - `ContactFLow/`: configuracion principal de Django, urls globales, ASGI/WSGI.
@@ -100,6 +117,9 @@ djlint . --profile django --reformat
 - Si se toca autenticacion, permisos o datos del CRM, verificar que cada usuario solo acceda a sus propios objetos.
 - Ejecutar pruebas relevantes antes de terminar cuando sea razonable. Si no se pueden ejecutar, explicar por que.
 - No revertir cambios ajenos del usuario. Si hay cambios no relacionados en el arbol de git, ignorarlos.
+- Para este proyecto, "optimizar" significa hacer el cambio mínimo que mejore claridad, seguridad, rendimiento o mantenibilidad.
+- No reestructurar templates, views, forms o modelos completos si el usuario pidió una mejora puntual.
+- Si una solución implica cambiar mucho código, detenerse y explicar primero el plan.
 
 ## Convenciones Django
 
