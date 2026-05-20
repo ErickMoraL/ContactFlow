@@ -100,8 +100,8 @@ admin.site.register(Phone, PhoneAdmin)
 
 
 class SocialMediaAdmin(admin.ModelAdmin):
-    list_display = ("platform", "handle", "contact", "created_at")
-    search_fields = ("platform", "handle", "contact__first_name", "contact__last_name")
+    list_display = ("platform", "url", "contact", "created_at")
+    search_fields = ("platform", "url", "contact__first_name", "contact__last_name")
     ordering = ("-created_at",)
 
 
