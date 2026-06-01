@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import ContactForm, InteractionForm
+from .forms import ContactForm, InteractionForm, CompanyForm
 from .models import Contact, Email, Phone, SocialMedia
 
 
@@ -153,3 +153,18 @@ def contact_mark_closed(request):
 @login_required
 def contact_mark_lost(request):
     return HttpResponse("Mark selected contacts as lost")
+
+
+@login_required
+def create_company(request):
+    if request.method == "POST":
+        form = CompanyForm(request.POST, user=request.user)
+
+        if form.is_valid():
+            company = form.save(commit=False)
+            company.user = request.user
+            company.save()
+            return redirect("contact_list")
+    else:
+        form = CompanyForm(user=request.user)
+    return render(request, "contacts/create_company.html", {"form": form})

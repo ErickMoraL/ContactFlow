@@ -12,6 +12,14 @@ class Company(models.Model):
     website = models.URLField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "name"],
+                name="unique_company_per_user",
+            )
+        ]
+
     def __str__(self):
         return self.name
 

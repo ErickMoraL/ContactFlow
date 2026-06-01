@@ -41,3 +41,25 @@ class InteractionForm(forms.ModelForm):
             "note",
             "interaction_date",
         ]
+
+
+class CompanyForm(forms.ModelForm):
+    def __init__(self, *args, user=None, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Company
+        fields = [
+            "name",
+            "industry",
+            "website",
+        ]
+
+    def clean_name(self):
+        name = self.cleaned_data["name"]
+
+        if Company.objects.filter(user=self.user, name=name).exists():
+            raise forms.ValidationError("You already have a company with this name.")
+
+        return name

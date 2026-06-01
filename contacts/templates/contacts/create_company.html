@@ -1,0 +1,55 @@
+{% extends "contacts/layout.html" %}
+{% block title %}
+  Create Company
+{% endblock title %}
+{% block content %}
+  <section class="mx-auto max-w-xl">
+    <div class="mb-6 text-center">
+      <p class="muted text-sm font-medium uppercase tracking-wide">Contacts</p>
+      <h1 class="text-accent mt-1 text-3xl font-bold">Create Company</h1>
+    </div>
+    <form method="post" class="card space-y-5">
+      {% csrf_token %}
+      <div>
+        <label for="id_name" class="label-primary">Company name</label>
+        <input type="text"
+               name="name"
+               maxlength="150"
+               required
+               id="id_name"
+               value="{{ form.name.value|default:'' }}"
+               class="input-primary {% if form.name.errors %}input-error{% endif %}"
+               autocomplete="organization" />
+        {% if form.name.errors %}<div class="error-text">{{ form.name.errors }}</div>{% endif %}
+      </div>
+      <div>
+        <label for="id_industry" class="label-primary">Industry</label>
+        <input type="text"
+               name="industry"
+               maxlength="100"
+               id="id_industry"
+               value="{{ form.industry.errors|default:'' }}"
+               class="input-primary {% if form.industry.errors %}input-error{% endif %}">
+        {% if form.industry.errors %}<div class="error-text">{{ form.industry.errors }}</div>{% endif %}
+      </div>
+      <div>
+        <label for="id_website">Website</label>
+        <input type="url"
+               name="website"
+               maxlength="200"
+               id="id_website"
+               value="{{ form.website.errors|default:'' }}"
+               class="input-primary {% if form.website.errors %}input-error{% endif %}">
+        {% if form.website.errors %}<div class="error-text">{{ form.website.errors }}</div>{% endif %}
+      </div>
+      {% comment %} buttons {% endcomment %}
+      <div class="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+        <a href="{% url 'contact_list' %}" class="btn-secondary text-center">Cancel</a>
+        <button type="submit" class="btn-primary">Save</button>
+      </div>
+    </form>
+  </section>
+{% endblock content %}
+{% block extra_scripts %}
+  {{ block.super }}
+{% endblock extra_scripts %}
