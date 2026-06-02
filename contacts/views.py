@@ -3,6 +3,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib import messages
 
 from .forms import ContactForm, InteractionForm, CompanyForm
 from .models import Contact, Email, Phone, SocialMedia
@@ -114,8 +115,8 @@ def contact_create(request):
                     interaction = interaction_form.save(commit=False)
                     interaction.contact = contact
                     interaction.save()
-
-            return redirect("contact_list")
+            messages.success(request, "Contact created successfully.")
+            return redirect("contact_create")
 
     else:
         form = ContactForm(user=request.user)
@@ -164,7 +165,8 @@ def create_company(request):
             company = form.save(commit=False)
             company.user = request.user
             company.save()
-            return redirect("contact_list")
+            messages.success(request, "Company created successfully.")
+            return redirect("create_company")
     else:
         form = CompanyForm(user=request.user)
     return render(request, "contacts/create_company.html", {"form": form})

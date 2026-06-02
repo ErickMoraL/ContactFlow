@@ -8,7 +8,9 @@
       <p class="muted text-sm font-medium uppercase tracking-wide">Contacts</p>
       <h1 class="text-accent mt-1 text-3xl font-bold">Create Company</h1>
     </div>
-    <form method="post" class="card space-y-5">
+    <form method="post"
+          class="card space-y-5"
+          onsubmit="return confirm('¿Deseas guardar esta compañía?')">
       {% csrf_token %}
       <div>
         <label for="id_name" class="label-primary">Company name</label>

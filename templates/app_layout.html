@@ -2,10 +2,16 @@
 {% block header %}
   <header class="border-b border-(--app-border) bg-(--app-surface) shadow-sm">
     <div class="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-      <a href="{% url 'contact_list' %}"
-         class="text-primary text-base font-semibold tracking-tight whitespace-nowrap transition hover:opacity-80 sm:text-lg">
-        Contact list
-      </a>
+      <div class="flex items-center gap-6">
+        <a href="{% url 'contact_list' %}"
+           class="text-primary text-base font-semibold tracking-tight whitespace-nowrap transition hover:opacity-80 sm:text-lg">
+          Contacts
+        </a>
+        <a href="{% url 'create_company' %}"
+           class="text-primary text-base font-semibold tracking-tight whitespace-nowrap transition hover:opacity-80 sm:text-lg">
+        Companies</a>
+      </div>
+      {% comment %} account and settings {% endcomment %}
       <div class="flex items-center gap-2 sm:gap-3">
         <div class="relative">
           <button type="button"
