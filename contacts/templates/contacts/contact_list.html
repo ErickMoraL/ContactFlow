@@ -17,44 +17,44 @@
   </div>
   <form method="post">
     {% csrf_token %}
-    <section class="grid grid-cols-1 gap-4 lg:grid-cols-[4fr_1fr]">
-      <div>
+    <section class="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,4fr)_1fr]">
+      <div class="min-w-0">
         <h1 class="text-accent text-center text-2xl font-bold">Contacts</h1>
         <div class="overflow-x-auto">
-          <table class="mx-0 w-full  border-collapse overflow-hidden rounded-lg border border-(--app-border)">
+          <table class="w-full min-w-[900px] border-collapse overflow-hidden rounded-lg border border-(--app-border)">
             <thead class="bg-primary text-left text-white">
               <tr>
-                <th class="p-3">
+                <th class="p-2">
                   <input type="checkbox" id="select-all" />
                 </th>
-                <th class="p-3 text-center font-medium">First Name</th>
-                <th class="p-3 text-center font-medium">Last Name</th>
-                <th class="p-3 text-center font-medium">Status</th>
-                <th class="p-3 text-center font-medium">Company</th>
-                <th class="p-3 text-center font-medium">Email</th>
-                <th class="p-3 text-center font-medium">Phone</th>
-                <th class="p-3 text-center font-medium">Edit</th>
-                <th class="p-3 text-center font-medium">Details</th>
+                <th class="p-2 text-center font-medium">First Name</th>
+                <th class="p-2 text-center font-medium">Last Name</th>
+                <th class="p-2 text-center font-medium">Status</th>
+                <th class="p-2 text-center font-medium">Company</th>
+                <th class="p-2 text-center font-medium">Email</th>
+                <th class="p-2 text-center font-medium">Phone</th>
+                <th class="p-2 text-center font-medium">Edit</th>
+                <th class="p-2 text-center font-medium">Details</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-(--app-border)">
               {% for contact in contacts %}
                 <tr class="hover:bg-primary-soft cursor-pointer transition">
-                  <td class="p-3">
+                  <td class="p-2">
                     <input type="checkbox" name="selected_contacts" value="{{ contact.id }}" />
                   </td>
-                  <td class="p-3">{{ contact.first_name }}</td>
-                  <td class="p-3">{{ contact.last_name }}</td>
-                  <td class="p-3">
+                  <td class="p-2">{{ contact.first_name }}</td>
+                  <td class="p-2">{{ contact.last_name }}</td>
+                  <td class="p-2">
                     <span class="bg-secondary-soft text-secondary rounded px-2 py-1 text-sm">{{ contact.get_status_display }}</span>
                   </td>
-                  <td class="p-3">{{ contact.company }}</td>
-                  <td class="p-3">{{ contact.primary_email }}</td>
-                  <td class="p-3">{{ contact.primary_phone }}</td>
-                  <td class="p-3">
+                  <td class="p-2">{{ contact.company }}</td>
+                  <td class="p-2">{{ contact.primary_email }}</td>
+                  <td class="p-2">{{ contact.primary_phone }}</td>
+                  <td class="p-2">
                     <a href="{% url 'contact_edit' contact.id %}" class="btn-primary">Edit</a>
                   </td>
-                  <td class="p-3">
+                  <td class="p-2">
                     <a href="{% url 'contact_detail' contact.id %}" class="btn-primary">View</a>
                   </td>
                 </tr>
@@ -67,7 +67,7 @@
           </table>
         </div>
       </div>
-      <aside class="sticky top-4 rounded-lg border border-(--app-border) p-4">
+      <aside class="sticky top-4 self-start rounded-lg border border-(--app-border) p-4">
         <h2 class="text-secondary mb-4 text-center text-lg font-medium">Actions</h2>
         <ul class="space-y-3">
           <li>
