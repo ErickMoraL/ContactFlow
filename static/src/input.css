@@ -100,6 +100,13 @@
     @apply focus:ring-primary focus:border-primary focus:ring-2 focus:outline-none;
     @apply disabled:cursor-not-allowed disabled:opacity-60;
   }
+  .textarea-primary {
+    background-color: var(--app-surface);
+    border-color: var(--app-border);
+
+    @apply w-full max-h-28 rounded border px-3 py-2 focus:ring-2 focus:outline-none;
+    @apply focus:ring-primary;
+  }
 
   .input-error {
     @apply border-red-500;
