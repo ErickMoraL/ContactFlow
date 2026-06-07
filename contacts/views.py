@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 
 from .forms import ContactForm, InteractionForm, CompanyForm
+from .formsSet import EmailFormSet, PhoneFormSet, SocialMediaFormSet, InteractionFormSet
 from .models import Contact, Email, Phone, SocialMedia
 
 
@@ -138,7 +139,50 @@ def contact_create(request):
 def contact_edit(request, pk):
     contact = get_object_or_404(Contact, pk=pk, user=request.user)
 
-    return render(request, "contacts/contact_edit.html", {"contact": contact})
+    if request.method == "POST":
+        contact_form = ContactForm(request.POST, user=request.user, instance=contact)
+        email_formset = EmailFormSet(request.POST, instance=contact, prefix="emails")
+        phone_formset = PhoneFormSet(request.POST, instance=contact, prefix="phones")
+        socialmedia_formset = SocialMediaFormSet(
+            request.POST, instance=contact, prefix="socials"
+        )
+        interction_formset = InteractionFormSet(
+            request.POST, instance=contact, prefix="interactions"
+        )
+
+        if (
+            contact_form.is_valid()
+            and email_formset.is_valid()
+            and phone_formset.is_valid()
+            and socialmedia_formset.is_valid()
+            and interction_formset.is_valid()
+        ):
+            contact_form.save()
+            email_formset.save()
+            phone_formset.save()
+            socialmedia_formset.save()
+            interction_formset.save()
+
+            messages.success(request, "Contact updated successfully.")
+            return redirect("contact_edit", pk=contact.pk)
+    else:
+        contact_form = ContactForm(instance=contact, user=request.user)
+        email_formset = EmailFormSet(instance=contact, prefix="emails")
+        phone_formset = PhoneFormSet(instance=contact, prefix="phones")
+        socialmedia_formset = SocialMediaFormSet(instance=contact, prefix="socials")
+        interction_formset = InteractionFormSet(instance=contact, prefix="interactions")
+
+    return render(
+        request,
+        "contacts/contact_edit.html",
+        {
+            "contact_form": contact_form,
+            "email_formset": email_formset,
+            "phone_formset": phone_formset,
+            "socialmedia_formset": socialmedia_formset,
+            "interaction_formset": interction_formset,
+        },
+    )
 
 
 @login_required

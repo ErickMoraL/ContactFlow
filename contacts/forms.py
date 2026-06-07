@@ -1,5 +1,5 @@
 from django import forms
-from .models import Company, Contact, Interaction
+from .models import Company, Contact, Interaction, Email, Phone, SocialMedia
 
 
 class ContactForm(forms.ModelForm):
@@ -33,6 +33,24 @@ class InteractionForm(forms.ModelForm):
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["interaction_type"].widget.attrs.update(
+            {
+                "class": "select-primary",
+                "placeholder": "Enter interaction type",
+            }
+        )
+        self.fields["note"].widget.attrs.update(
+            {
+                "class": "textarea-primary",
+                "placeholder": "Enter interaction note",
+            }
+        )
+        self.fields["interaction_date"].widget.attrs.update(
+            {
+                "class": "input-primary",
+                "placeholder": "Enter interaction date",
+            }
+        )
 
     class Meta:
         model = Interaction
@@ -63,3 +81,57 @@ class CompanyForm(forms.ModelForm):
             raise forms.ValidationError("You already have a company with this name.")
 
         return name
+
+
+class EmailForm(forms.ModelForm):
+    def __init__(self, *args, user=None, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+        self.fields["email"].widget.attrs.update(
+            {
+                "class": "input-primary",
+                "placeholder": "Enter email",
+            }
+        )
+
+    class Meta:
+        model = Email
+        fields = ["email"]
+
+
+class PhoneForm(forms.ModelForm):
+    def __init__(self, *args, user=None, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+        self.fields["phone_number"].widget.attrs.update(
+            {
+                "class": "input-primary",
+                "placeholder": "Enter phone",
+            }
+        )
+
+    class Meta:
+        model = Phone
+        fields = ["phone_number"]
+
+
+class SocialMediaForm(forms.ModelForm):
+    def __init__(self, *args, user=None, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+        self.fields["platform"].widget.attrs.update(
+            {
+                "class": "input-primary",
+                "placeholder": "Twitter, Linkedin, Github",
+            }
+        )
+        self.fields["url"].widget.attrs.update(
+            {
+                "class": "input-primary",
+                "placeholder": "https://...",
+            }
+        )
+
+    class Meta:
+        model = SocialMedia
+        fields = ["platform", "url"]
