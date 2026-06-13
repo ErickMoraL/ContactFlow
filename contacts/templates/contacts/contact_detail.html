@@ -3,5 +3,106 @@
   Contact detail
 {% endblock title %}
 {% block content %}
-  <h1 class="text-accent text-center text-2xl font-bold">{{ contact.first_name }} {{ contact.last_name }}</h1>
+  <section class="mx-auto" aria-labelledby="contact-detail-title">
+    <header class="mb-6 text-center">
+      <p class="muted text-sm font-medium uppercase tracking-wide">Contacts</p>
+      <h1 id="contact-detail-title" class="text-accent mt-1 text-3xl font-bold">Contact detail</h1>
+    </header>
+    <article class="card" aria-labelledby="contact-detail-title">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div class="space-y-5">
+          <div>
+            <p class="label-primary">First Name</p>
+            <p class="input-primary">{{ contact.first_name|default:"-" }}</p>
+          </div>
+          <div>
+            <p class="label-primary">Last Name</p>
+            <p class="input-primary">{{ contact.last_name|default:"-" }}</p>
+          </div>
+          <div>
+            <p class="label-primary">Status</p>
+            <p class="input-primary">{{ contact.status|default:"-" }}</p>
+          </div>
+          <div>
+            <p class="label-primary">Company</p>
+            <p class="input-primary">{{ contact.company|default:"-" }}</p>
+          </div>
+          <div>
+            <p class="label-primary">Email</p>
+            <ul class="space-y-5">
+              {% for email in contact.emails.all %}
+                <li class="input-primary">{{ email.email }}</li>
+              {% empty %}
+                <li class="input-primary">---</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div>
+            <p class="label-primary">Phone</p>
+            <ul class="space-y-5">
+              {% for phone in contact.phones.all %}
+                <li class="input-primary">{{ phone.phone_number }}</li>
+              {% empty %}
+                <li class="input-primary">---</li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div>
+            <p class="label-primary">Social Media</p>
+            <ul class="space-y-5">
+              {% for social_media in contact.social_media.all %}
+                <li class="grid grid-cols-2 gap-4">
+                  <span class="input-primary min-w-0 truncate">{{ social_media.platform }}</span>
+                  <span class="input-primary min-w-0 truncate" title="{{ social_media.url }}">{{ social_media.url }}</span>
+                </li>
+              {% empty %}
+                <li class="grid grid-cols-2 gap-4">
+                  <span class="input-primary min-w-0 truncate">---</span>
+                  <span class="input-primary min-w-0 truncate">---</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <section class="space-y-5" aria-label="Interactions">
+          {% for interaction in contact.interactions.all %}
+            <article aria-label="Interaction {{ forloop.counter }}">
+              <div class="space-y-5">
+                <div>
+                  <p class="label-primary">Interaction Type</p>
+                  <p class="input-primary">{{ interaction.interaction_type }}</p>
+                </div>
+                <div>
+                  <p class="label-primary">Note</p>
+                  <p class="textarea-primary">{{ interaction.note }}</p>
+                </div>
+                <div>
+                  <p class="label-primary">Interaction date</p>
+                  <p class="input-primary">{{ interaction.interaction_date }}</p>
+                </div>
+              </div>
+            </article>
+          {% empty %}
+            <article aria-label="Interaction {{ forloop.counter }}">
+              <div class="space-y-5">
+                <div>
+                  <p class="label-primary">Interaction Type</p>
+                  <p class="input-primary">---</p>
+                  </div>
+                  <div>
+                    <p class="label-primary">Note</p>
+              <p class="textarea-primary">---</p>
+            </div>
+            <div>
+              <p class="label-primary">Interaction date</p>
+              <p class="input-primary">---</p>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </section>
+  </div>
+</article>
+</section>
 {% endblock content %}

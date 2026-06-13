@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
+from django.urls import reverse
 
 from .forms import ContactForm, InteractionForm, CompanyForm
 from .formsSet import EmailFormSet, PhoneFormSet, SocialMediaFormSet, InteractionFormSet
@@ -73,9 +74,24 @@ def contact_list(request):
 
 @login_required
 def contact_detail(request, pk):
-    contact = get_object_or_404(Contact, pk=pk, user=request.user)
-
-    return render(request, "contacts/contact_detail.html", {"contact": contact})
+    contact = get_object_or_404(
+        Contact.objects.prefetch_related(
+            "emails",
+            "phones",
+            "social_media",
+            "interactions",
+        ),
+        pk=pk,
+        user=request.user,
+    )
+    return render(
+        request,
+        "contacts/contact_detail.html",
+        {
+            "contact": contact,
+            "cancel_url": reverse("contact_list"),
+        },
+    )
 
 
 @login_required

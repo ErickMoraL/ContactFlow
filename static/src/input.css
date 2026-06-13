@@ -104,7 +104,7 @@
     background-color: var(--app-surface);
     border-color: var(--app-border);
 
-    @apply w-full max-h-28 rounded border px-3 py-2 focus:ring-2 focus:outline-none;
+    @apply h-33 w-full rounded border px-3 py-2 focus:ring-2 focus:outline-none;
     @apply focus:ring-primary;
   }
 
@@ -123,7 +123,7 @@
   }
 
   .label-secondary {
-    @apply mb-0.5 block font-light text-sm;
+    @apply mb-0.5 block text-sm font-light;
   }
 
   .error-text {
