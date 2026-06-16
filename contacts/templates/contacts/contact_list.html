@@ -86,10 +86,18 @@
                     formaction="{% url 'contact_delete_selected' %}"
                     onclick="return confirm('Delete selected contacts?');">Delete selected</button>
           </li>
+          <li>
+            <button class="btn-primary w-full"
+                    type="submit"
+                    formaction="{% url 'contact_mark_negotiating' %}">Mark as negotiating</button>
+          </li>
         </ul>
       </aside>
     </section>
   </form>
+{% endblock content %}
+{% block extra_scripts %}
+  {{ block.super }}
   <script>
   const selectAllCheckbox = document.getElementById("select-all");
 
@@ -119,4 +127,4 @@
     });
   });
   </script>
-{% endblock content %}
+{% endblock extra_scripts %}

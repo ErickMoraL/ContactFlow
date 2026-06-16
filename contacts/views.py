@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.db import transaction
 from django.db.models import Q
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.urls import reverse
@@ -201,19 +201,66 @@ def contact_edit(request, pk):
     )
 
 
+@require_POST
 @login_required
 def contact_delete(request):
-    return HttpResponse("Delete selected contacts")
+    selected_contact_ids = request.POST.getlist("selected_contacts")
+    if not selected_contact_ids:
+        messages.warning(request, "No contacts selected.")
+        return redirect("contact_list")
+    Contact.objects.filter(
+        id__in=selected_contact_ids,
+        user=request.user,
+    ).delete()
+
+    messages.success(request, "Contacts deleted successfully.")
+
+    return redirect("contact_list")
 
 
+@require_POST
 @login_required
 def contact_mark_closed(request):
-    return HttpResponse("Mark selected contacts as closed")
+    selected_contact_ids = request.POST.getlist("selected_contacts")
+    if not selected_contact_ids:
+        messages.warning(request, "no contacts selected.")
+        return redirect("contact_list")
+    Contact.objects.filter(
+        id__in=selected_contact_ids,
+        user=request.user,
+    ).update(status=Contact.Status.CLOSED)
+    messages.success(request, "Contacts marked as closed")
+    return redirect("contact_list")
 
 
+@require_POST
 @login_required
 def contact_mark_lost(request):
-    return HttpResponse("Mark selected contacts as lost")
+    selected_contact_ids = request.POST.getlist("selected_contacts")
+    if not selected_contact_ids:
+        messages.warning(request, "no contacts selected.")
+        return redirect("contact_list")
+    Contact.objects.filter(
+        id__in=selected_contact_ids,
+        user=request.user,
+    ).update(status=Contact.Status.LOST)
+    messages.success(request, "Contacts marked as lost")
+    return redirect("contact_list")
+
+
+@require_POST
+@login_required
+def contact_mark_negotiating(request):
+    selected_contact_ids = request.POST.getlist("selected_contacts")
+    if not selected_contact_ids:
+        messages.warning(request, "no contacts selected.")
+        return redirect("contact_list")
+    Contact.objects.filter(
+        id__in=selected_contact_ids,
+        user=request.user,
+    ).update(status=Contact.Status.NEGOTIATING)
+    messages.success(request, "Contacts marked as negotiating")
+    return redirect("contact_list")
 
 
 @login_required
