@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.db import transaction
 from django.db.models import Q
@@ -8,7 +9,10 @@ from django.urls import reverse
 
 from .forms import ContactForm, InteractionForm, CompanyForm
 from .formsSet import EmailFormSet, PhoneFormSet, SocialMediaFormSet, InteractionFormSet
-from .models import Contact, Email, Phone, SocialMedia
+from .models import Contact, Email, Phone, SocialMedia, Company
+
+
+# contact
 
 
 def update_selected_contacts_status(request, status: Contact.Status, success_message):
@@ -264,8 +268,11 @@ def contact_mark_negotiating(request):
     )
 
 
+# Company
+
+
 @login_required
-def create_company(request):
+def company_create(request):
     if request.method == "POST":
         form = CompanyForm(request.POST, user=request.user)
 
@@ -274,7 +281,27 @@ def create_company(request):
             company.user = request.user
             company.save()
             messages.success(request, "Company created successfully.")
-            return redirect("create_company")
+            return redirect("company_create")
     else:
         form = CompanyForm(user=request.user)
-    return render(request, "contacts/create_company.html", {"form": form})
+    return render(request, "contacts/company_create.html", {"form": form})
+
+
+@login_required
+def company_list(request):
+    query = request.GET.get("q", "")
+
+    companies = Company.objects.filter(user=request.user)
+
+    if query:
+        companies = companies.filter(
+            Q(name__icontains=query)
+            | Q(industry__icontains=query)
+            | Q(website__icontains=query)
+        )
+    return render(request, "contacts/company_list.html", {"companies": companies})
+
+
+@login_required
+def company_edit(request):
+    return HttpResponse("Company edit view - to be implemented")

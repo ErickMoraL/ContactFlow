@@ -1,0 +1,103 @@
+{% extends "contacts/layout.html" %}
+{% block title %}
+  Companies
+{% endblock title %}
+{% block content %}
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-[4fr_1fr] mb-6">
+    <form method="get" class="flex gap-4">
+      <input type="text"
+             name="q"
+             value="{{ request.GET.q }}"
+             placeholder="Search contacts"
+             class="input-primary w-full">
+      <button type="submit" class="btn-primary">Search</button>
+    </form>
+    <a href="{% url 'company_create' %}"
+       class="btn-primary whitespace-nowrap">Create new company</a>
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    <section class="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,4fr)_1fr]">
+      <div class="min-w-0">
+        <h1 class="text-accent text-center text-2xl font-bold">Companies</h1>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[900px] border-collapse overflow-hidden rounded-lg border border-(--app-border)">
+            <thead class="bg-primary text-left text-white">
+              <tr>
+                <th class="p-2">
+                  <input type="checkbox" id="select-all" />
+                </th>
+                <th class="p-2 text-center font-medium">Name</th>
+                <th class="p-2 text-center font-medium">Industry</th>
+                <th class="p-2 text-center font-medium">Website</th>
+                <th class="p-2 text-center font-medium">Edit</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-(--app-border)">
+              {% for company in companies %}
+                <tr class="hover:bg-primary-soft cursor-pointer transition">
+                  <td class="p-2">
+                    <input type="checkbox" name="selected_companies" value="{{ company.id }}" />
+                  </td>
+                  <td class="p-2">{{ company.name | default:"---" }}</td>
+                  <td class="p-2 text-center">{{ company.industry | default:"---" }}</td>
+                  <td class="p-2 text-center">{{ company.website | default:"---" }}</td>
+                  <td class="p-2 text-center">
+                    <a href="{% url 'company_edit' company.id %}" class="btn-primary">Edit</a>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="9" class="muted p-6 text-center">No companies found</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <aside class="sticky top-4 self-start rounded-lg border border-(--app-border) p-4">
+        <h2 class="text-secondary mb-4 text-center text-lg font-medium">Actions</h2>
+        <ul class="space-y-3">
+          <li>
+            <button class="btn-primary w-full"
+                    type="submit"
+                    formaction="{% url 'contact_delete_selected' %}"
+                    onclick="return confirm('Delete selected contacts?');">Delete selected</button>
+          </li>
+        </ul>
+      </aside>
+    </section>
+  </form>
+{% endblock content %}
+{% block extra_scripts %}
+  {{ block.super }}
+  <script>
+  const selectAllCheckbox = document.getElementById("select-all");
+
+  if (selectAllCheckbox) {
+    selectAllCheckbox.addEventListener("change", function () {
+      const checkboxes = document.querySelectorAll(
+        'input[name="selected_companies"]',
+      );
+
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = selectAllCheckbox.checked;
+      });
+    });
+  }
+
+  const contactCheckboxes = document.querySelectorAll(
+    'input[name="selected_companies"]',
+  );
+
+  contactCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      const allChecked = [...contactCheckboxes].every(
+        (checkbox) => checkbox.checked,
+      );
+
+      selectAllCheckbox.checked = allChecked;
+    });
+  });
+  </script>
+{% endblock extra_scripts %}

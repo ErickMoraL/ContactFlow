@@ -15,5 +15,7 @@ urlpatterns = [
         views.contact_mark_negotiating,
         name="contact_mark_negotiating",
     ),
-    path("create_company", views.create_company, name="create_company"),
+    path("company_list", views.company_list, name="company_list"),
+    path("company_create", views.company_create, name="company_create"),
+    path("company_edit/<int:pk>/", views.company_edit, name="company_edit"),
 ]
