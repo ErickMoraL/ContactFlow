@@ -11,6 +11,22 @@ from .formsSet import EmailFormSet, PhoneFormSet, SocialMediaFormSet, Interactio
 from .models import Contact, Email, Phone, SocialMedia
 
 
+def update_selected_contacts_status(request, status: Contact.Status, success_message):
+    selected_contact_ids = request.POST.getlist("selected_contacts")
+
+    if not selected_contact_ids:
+        messages.warning(request, "No contacts selected.")
+        return redirect("contact_list")
+
+    Contact.objects.filter(
+        id__in=selected_contact_ids,
+        user=request.user,
+    ).update(status=status)
+
+    messages.success(request, success_message)
+    return redirect("contact_list")
+
+
 def has_interaction_data(request):
     return any(
         request.POST.get(field, "").strip()
@@ -218,49 +234,34 @@ def contact_delete(request):
     return redirect("contact_list")
 
 
-@require_POST
 @login_required
+@require_POST
 def contact_mark_closed(request):
-    selected_contact_ids = request.POST.getlist("selected_contacts")
-    if not selected_contact_ids:
-        messages.warning(request, "no contacts selected.")
-        return redirect("contact_list")
-    Contact.objects.filter(
-        id__in=selected_contact_ids,
-        user=request.user,
-    ).update(status=Contact.Status.CLOSED)
-    messages.success(request, "Contacts marked as closed")
-    return redirect("contact_list")
+    return update_selected_contacts_status(
+        request,
+        Contact.Status.CLOSED,
+        "Contacts marked as closed.",
+    )
 
 
-@require_POST
 @login_required
+@require_POST
 def contact_mark_lost(request):
-    selected_contact_ids = request.POST.getlist("selected_contacts")
-    if not selected_contact_ids:
-        messages.warning(request, "no contacts selected.")
-        return redirect("contact_list")
-    Contact.objects.filter(
-        id__in=selected_contact_ids,
-        user=request.user,
-    ).update(status=Contact.Status.LOST)
-    messages.success(request, "Contacts marked as lost")
-    return redirect("contact_list")
+    return update_selected_contacts_status(
+        request,
+        Contact.Status.LOST,
+        "Contacts marked as lost.",
+    )
 
 
-@require_POST
 @login_required
+@require_POST
 def contact_mark_negotiating(request):
-    selected_contact_ids = request.POST.getlist("selected_contacts")
-    if not selected_contact_ids:
-        messages.warning(request, "no contacts selected.")
-        return redirect("contact_list")
-    Contact.objects.filter(
-        id__in=selected_contact_ids,
-        user=request.user,
-    ).update(status=Contact.Status.NEGOTIATING)
-    messages.success(request, "Contacts marked as negotiating")
-    return redirect("contact_list")
+    return update_selected_contacts_status(
+        request,
+        Contact.Status.NEGOTIATING,
+        "Contacts marked as negotiating.",
+    )
 
 
 @login_required
